@@ -589,7 +589,8 @@ const CATEGORIES = [
 const SITE_INFO = {
   phone:'+90 534 677 51 71',
   email:'winnersmimarlik@gmail.com',
-  address:'Uluönder Caddesi No:6/A, Karabağlar, İzmir'
+  address:'Uluönder Caddesi No:6/A, Karabağlar, İzmir',
+  mapUrl:'https://www.google.com/maps/place/W%C4%B0NNERS+M%C4%B0MARLIK/@38.398295,27.1125903,19z/data=!3m1!4b1!4m6!3m5!1s0x14bbd966c95e8f4b:0x3d3b89193bdf4194!8m2!3d38.398294!4d27.113234!16s%2Fg%2F11vbtfj6d0?entry=ttu&g_ep=EgoyMDI2MDgxMi4wIKXMDSoASAFQAw%3D%3D'
 };
 
 // Proje galerisi — her kategoriye görsel eklemek için buraya {src, caption} nesneleri ekleyin.
@@ -741,7 +742,7 @@ function renderSiteInfo(){
   e.href = 'mailto:' + state.siteInfo.email;
   const a = document.getElementById('infoAddress');
   document.getElementById('infoAddressText').textContent = state.siteInfo.address;
-  a.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(state.siteInfo.address);
+  a.href = state.siteInfo.mapUrl || ('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(state.siteInfo.address));
 }
 
 document.getElementById('year').textContent = new Date().getFullYear();
