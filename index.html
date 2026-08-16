@@ -339,6 +339,42 @@
   .founder-line{margin-top:22px; padding-top:18px; border-top:1px solid rgba(242,242,238,0.14); color:var(--stone); font-size:13.5px; display:flex; align-items:center; gap:10px;}
   .founder-line .dot{width:6px;height:6px;background:var(--brass-bright); border-radius:50%; flex-shrink:0;}
 
+  /* ---------- floating whatsapp button ---------- */
+  .wa-float{
+    position:fixed; right:22px; bottom:22px; z-index:150;
+    width:58px; height:58px; border-radius:50%;
+    background:#25D366; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 26px -8px rgba(0,0,0,0.55);
+    text-decoration:none; transition:transform .25s cubic-bezier(.16,.8,.3,1), box-shadow .25s;
+  }
+  .wa-float:hover{transform:translateY(-3px) scale(1.05); box-shadow:0 16px 32px -10px rgba(0,0,0,0.6);}
+  .wa-float svg{width:29px; height:29px; fill:#fff;}
+  .wa-float::before{
+    content:""; position:absolute; inset:0; border-radius:50%;
+    box-shadow:0 0 0 0 rgba(37,211,102,0.55);
+    animation:waPulse 2.6s ease-out infinite;
+  }
+  @keyframes waPulse{
+    0%{box-shadow:0 0 0 0 rgba(37,211,102,0.5);}
+    70%{box-shadow:0 0 0 16px rgba(37,211,102,0);}
+    100%{box-shadow:0 0 0 0 rgba(37,211,102,0);}
+  }
+  .wa-tooltip{
+    position:absolute; right:70px; top:50%; transform:translateY(-50%);
+    background:var(--blueprint-deep); border:1px solid rgba(242,242,238,0.18);
+    color:var(--line); padding:8px 14px; border-radius:6px; font-size:13px; white-space:nowrap;
+    opacity:0; pointer-events:none; transition:opacity .2s, transform .2s;
+  }
+  .wa-float:hover .wa-tooltip{opacity:1; transform:translateY(-50%) translateX(-4px);}
+  @media (max-width:560px){
+    .wa-float{width:52px; height:52px; right:16px; bottom:16px;}
+    .wa-float svg{width:26px; height:26px;}
+    .wa-tooltip{display:none;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .wa-float::before{animation:none;}
+  }
+
   /* ---------- instagram button ---------- */
   .ig-btn{
     display:inline-flex; align-items:center; gap:8px;
@@ -507,6 +543,11 @@
             <span class="cc-text"><span class="cc-label">Instagram</span><span class="cc-value">@winners.mimarlik</span></span>
             <span class="cc-arrow">→</span>
           </a>
+          <a id="infoWhatsapp" class="contact-card" href="#" target="_blank" rel="noopener">
+            <span class="cc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--brass-bright)" stroke-width="1.6"><path d="M20.5 3.5A10.4 10.4 0 0 0 12.02 0.5 10.44 10.44 0 0 0 3 16.4L1.5 21.5l5.24-1.37a10.4 10.4 0 0 0 5.28 1.44h.01a10.44 10.44 0 0 0 8.47-16.5zM12.03 19.7a8.65 8.65 0 0 1-4.4-1.2l-.32-.19-3.11.81.83-3.03-.2-.31a8.68 8.68 0 1 1 16.13-4.58 8.63 8.63 0 0 1-8.93 8.5z" fill="var(--brass-bright)" stroke="none"/><path d="M9 7.6c-.2-.45-.4-.46-.6-.47h-.5c-.18 0-.46.07-.7.34-.24.27-.92.9-.92 2.2s.94 2.55 1.07 2.73c.13.18 1.83 2.8 4.44 3.82 2.17.85 2.6.68 3.08.64.47-.04 1.5-.61 1.72-1.2.21-.6.21-1.1.15-1.21-.06-.11-.24-.18-.5-.31-.27-.13-1.5-.74-1.74-.82-.23-.09-.4-.13-.57.13-.17.27-.65.82-.8.98-.15.17-.29.19-.55.06-.27-.13-1.12-.41-2.13-1.31a7.97 7.97 0 0 1-1.48-1.83c-.15-.27-.02-.41.11-.54.12-.12.27-.31.4-.47.13-.16.17-.27.26-.45.09-.18.04-.34-.02-.47-.07-.13-.57-1.42-.8-1.94z" fill="var(--blueprint-deep)" stroke="none"/></svg></span>
+            <span class="cc-text"><span class="cc-label">WhatsApp</span><span class="cc-value">Hızlı mesaj gönder</span></span>
+            <span class="cc-arrow">→</span>
+          </a>
         </div>
       </div>
     </div>
@@ -547,6 +588,12 @@
     </a>
   </div>
 </footer>
+
+<!-- floating whatsapp button -->
+<a id="waFloat" href="#" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp'tan mesaj gönder">
+  <span class="wa-tooltip">WhatsApp'tan yazın</span>
+  <svg viewBox="0 0 24 24"><path d="M20.5 3.5A10.4 10.4 0 0 0 12.02 0.5 10.44 10.44 0 0 0 3 16.4L1.5 21.5l5.24-1.37a10.4 10.4 0 0 0 5.28 1.44h.01a10.44 10.44 0 0 0 8.47-16.5zM12.03 19.7a8.65 8.65 0 0 1-4.4-1.2l-.32-.19-3.11.81.83-3.03-.2-.31a8.68 8.68 0 1 1 16.13-4.58 8.63 8.63 0 0 1-8.93 8.5z"/><path d="M9 7.6c-.2-.45-.4-.46-.6-.47h-.5c-.18 0-.46.07-.7.34-.24.27-.92.9-.92 2.2s.94 2.55 1.07 2.73c.13.18 1.83 2.8 4.44 3.82 2.17.85 2.6.68 3.08.64.47-.04 1.5-.61 1.72-1.2.21-.6.21-1.1.15-1.21-.06-.11-.24-.18-.5-.31-.27-.13-1.5-.74-1.74-.82-.23-.09-.4-.13-.57.13-.17.27-.65.82-.8.98-.15.17-.29.19-.55.06-.27-.13-1.12-.41-2.13-1.31a7.97 7.97 0 0 1-1.48-1.83c-.15-.27-.02-.41.11-.54.12-.12.27-.31.4-.47.13-.16.17-.27.26-.45.09-.18.04-.34-.02-.47-.07-.13-.57-1.42-.8-1.94z"/></svg>
+</a>
 
 <!-- custom cursor elements -->
 <div class="cur-ring hidden" id="curRing"></div>
@@ -743,6 +790,15 @@ function renderSiteInfo(){
   const a = document.getElementById('infoAddress');
   document.getElementById('infoAddressText').textContent = state.siteInfo.address;
   a.href = state.siteInfo.mapUrl || ('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(state.siteInfo.address));
+
+  // WhatsApp link built from the same phone number
+  const waDigits = state.siteInfo.phone.replace(/[^\d]/g,''); // keep digits only, e.g. 905346775171
+  const waMsg = encodeURIComponent('Merhaba, Winners Mimarlık hakkında bilgi almak istiyorum.');
+  const waUrl = 'https://wa.me/' + waDigits + '?text=' + waMsg;
+  const waCard = document.getElementById('infoWhatsapp');
+  if(waCard) waCard.href = waUrl;
+  const waFloat = document.getElementById('waFloat');
+  if(waFloat) waFloat.href = waUrl;
 }
 
 document.getElementById('year').textContent = new Date().getFullYear();
