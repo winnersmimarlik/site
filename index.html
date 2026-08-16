@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Winners Mimarlık — İç Mimarlık, Tadilat, Dekorasyon, Mobilya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blueprint:#0A0A0A;
+    --blueprint-deep:#000000;
+    --line:#F2F2EE;
+    --line-dim:#8C8C86;
+    --brass:#E8B923;
+    --brass-bright:#FFD84D;
+    --stone:#9A9A92;
+    --paper:#F2F2EE;
+    --paper-dim:#1A1A1A;
+    --danger:#C9992A;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--blueprint);
+    color:var(--line);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .mono{
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    font-size:12px;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;cursor:pointer;}
+  :focus-visible{outline:2px solid var(--brass-bright);outline-offset:3px;}
+
+  /* blueprint grid background */
+  .grid-bg{
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    background-position:center;
+    opacity:0.06;
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+  }
+  .section{position:relative; padding:96px 6vw; overflow:hidden;}
+  .section-inner{max-width:1180px; margin:0 auto; position:relative; z-index:1;}
+
+  /* header */
+  header{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 6vw;
+    background:rgba(0,0,0,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(242,242,238,0.15);
+  }
+  .logo{font-family:'Fraunces',serif; font-size:19px; letter-spacing:0.04em;}
+  .logo b{color:var(--brass-bright); font-weight:600;}
+  nav{display:flex; gap:32px;}
+  nav a{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; text-transform:uppercase;
+    letter-spacing:0.08em; text-decoration:none; color:var(--stone);
+    padding-bottom:3px; border-bottom:1px solid transparent; transition:.2s;
+  }
+  nav a:hover{color:var(--line); border-color:var(--brass);}
+  .nav-toggle{display:none; background:none;border:1px solid var(--line-dim); color:var(--line); padding:8px 10px;}
+
+  /* hero */
+  .hero{padding-top:120px; padding-bottom:120px; border-bottom:1px solid rgba(242,242,238,0.15);}
+  .hero-tag{color:var(--brass-bright); margin-bottom:22px; display:flex; align-items:center; gap:10px;}
+  .hero-tag::before{content:"";width:24px;height:1px;background:var(--brass-bright);display:inline-block;}
+  .hero h1{font-size:clamp(38px,6vw,74px); max-width:14ch; line-height:1.05;}
+  .hero h1 em{font-style:italic; color:var(--brass-bright);}
+  .hero p.lead{max-width:46ch; color:var(--stone); margin-top:26px; font-size:17px;}
+  .hero-actions{margin-top:38px; display:flex; gap:18px; flex-wrap:wrap; align-items:center;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:15px 26px; border-radius:var(--radius); border:1px solid transparent;
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; text-transform:uppercase; letter-spacing:0.08em;
+    text-decoration:none; transition:.2s;
+  }
+  .btn-primary{background:var(--brass); color:var(--blueprint-deep); font-weight:500;}
+  .btn-primary:hover{background:var(--brass-bright);}
+  .btn-ghost{border-color:var(--line-dim); color:var(--line);}
+  .btn-ghost:hover{border-color:var(--line); background:rgba(242,242,238,0.06);}
+
+  .measure{
+    display:flex; align-items:center; gap:8px; color:var(--line-dim); font-size:11px;
+  }
+  .measure .tick{width:1px;height:8px;background:var(--line-dim);}
+  .measure-line{flex:1;height:1px;background:repeating-linear-gradient(90deg,var(--line-dim) 0 6px, transparent 6px 11px);}
+
+  .hero-frame{
+    margin-top:64px; border:1px solid rgba(242,242,238,0.25); border-radius:var(--radius);
+    padding:26px; position:relative;
+  }
+  .hero-frame .corner{position:absolute; width:14px; height:14px; border:1px solid var(--brass-bright);}
+  .hero-frame .corner.tl{top:-1px;left:-1px;border-right:none;border-bottom:none;}
+  .hero-frame .corner.tr{top:-1px;right:-1px;border-left:none;border-bottom:none;}
+  .hero-frame .corner.bl{bottom:-1px;left:-1px;border-right:none;border-top:none;}
+  .hero-frame .corner.br{bottom:-1px;right:-1px;border-left:none;border-top:none;}
+  .hero-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .hero-stats div{border-left:1px solid rgba(242,242,238,0.2); padding-left:16px;}
+  .hero-stats .num{font-family:'Fraunces',serif; font-size:32px; color:var(--brass-bright);}
+  .hero-stats .lbl{color:var(--stone); font-size:12.5px; margin-top:4px;}
+
+  /* section headers */
+  .eyebrow{color:var(--brass-bright); margin-bottom:14px;}
+  .section h2{font-size:clamp(28px,3.4vw,42px); max-width:20ch;}
+  .section-head{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap; margin-bottom:56px;}
+  .section-head p{color:var(--stone); max-width:38ch; margin-top:14px;}
+
+  /* services */
+  .services-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(242,242,238,0.15); border:1px solid rgba(242,242,238,0.15);}
+  .service-card{background:var(--blueprint); padding:32px 26px; min-height:280px; display:flex; flex-direction:column; justify-content:space-between; transition:.25s;}
+  .service-card:hover{background:var(--blueprint-deep);}
+  .service-card .code{color:var(--brass-bright);}
+  .service-card h3{font-size:22px; margin-top:24px;}
+  .service-card p{color:var(--stone); font-size:14.5px; margin-top:10px;}
+  .service-card .arrow{margin-top:20px; color:var(--line-dim); font-size:20px;}
+
+  /* gallery */
+  .filters{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px;}
+  .filter-btn{
+    background:transparent; border:1px solid var(--line-dim); color:var(--stone);
+    padding:9px 16px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:0.06em;
+    border-radius:20px; transition:.2s;
+  }
+  .filter-btn.active, .filter-btn:hover{border-color:var(--brass-bright); color:var(--line); background:rgba(232,185,35,0.12);}
+  .gallery-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .gallery-item{position:relative; border:1px solid rgba(242,242,238,0.15); border-radius:var(--radius); overflow:hidden; aspect-ratio:4/3; background:var(--blueprint-deep); cursor:pointer;}
+  .gallery-item img{width:100%; height:100%; object-fit:cover; transition:.4s;}
+  .gallery-item:hover img{transform:scale(1.05);}
+  .gallery-item .tag{position:absolute; left:10px; bottom:10px; background:rgba(0,0,0,0.85); padding:5px 10px; font-size:10.5px;}
+  .empty-state{border:1px dashed var(--line-dim); border-radius:var(--radius); padding:56px 24px; text-align:center; color:var(--stone); grid-column:1/-1;}
+  .empty-state b{color:var(--line); display:block; margin-bottom:8px; font-family:'Fraunces',serif; font-size:19px; font-weight:500;}
+
+  /* about */
+  .about-wrap{display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:start;}
+  .about-quote{font-family:'Fraunces',serif; font-style:italic; font-size:26px; line-height:1.5; color:var(--line);}
+  .about-quote span{color:var(--brass-bright);}
+  .about-body p{color:var(--stone); margin-bottom:16px;}
+  .about-list{margin-top:26px; display:flex; flex-direction:column; gap:14px;}
+  .about-list li{display:flex; gap:14px; align-items:flex-start; list-style:none;}
+  .about-list .dot{width:6px;height:6px;background:var(--brass-bright); border-radius:50%; margin-top:8px; flex-shrink:0;}
+
+  /* contact */
+  .contact-wrap{display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px;}
+  .contact-info div{margin-bottom:26px;}
+  .contact-info .mono{color:var(--brass-bright); display:block; margin-bottom:6px;}
+  .contact-info a{text-decoration:none; font-size:17px;}
+  .field{margin-bottom:18px;}
+  .field label{display:block; font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--stone); margin-bottom:8px;}
+  .field input, .field textarea{
+    width:100%; background:rgba(242,242,238,0.05); border:1px solid var(--line-dim); border-radius:var(--radius);
+    color:var(--line); padding:13px 14px; font-family:'Inter',sans-serif; font-size:14.5px;
+  }
+  .field textarea{min-height:110px; resize:vertical;}
+  .field input:focus, .field textarea:focus{border-color:var(--brass-bright); outline:none;}
+  .form-msg{margin-top:14px; font-size:13.5px; padding:10px 14px; border-radius:var(--radius); display:none;}
+  .form-msg.ok{display:block; background:rgba(232,185,35,0.15); color:var(--brass-bright); border:1px solid var(--brass);}
+  .form-msg.err{display:block; background:rgba(201,153,42,0.15); color:#F0D27A; border:1px solid var(--danger);}
+
+  footer{padding:40px 6vw; border-top:1px solid rgba(242,242,238,0.15); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+  footer .fmark{color:var(--stone); font-size:13px; cursor:default; user-select:none;}
+  footer .fmark:hover{color:var(--stone);}
+  footer .flinks{display:flex; gap:20px;}
+  footer .flinks a{color:var(--stone); font-size:13px; text-decoration:none;}
+  footer .flinks a:hover{color:var(--line);}
+
+  /* overlay shared */
+  .overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.82); backdrop-filter:blur(3px);
+    display:none; align-items:center; justify-content:center; z-index:200; padding:24px;
+  }
+  .overlay.open{display:flex;}
+  .modal{
+    background:var(--blueprint-deep); border:1px solid rgba(242,242,238,0.2); border-radius:6px;
+    width:100%; max-width:420px; padding:34px; position:relative;
+  }
+  .modal.wide{max-width:920px; max-height:86vh; overflow-y:auto;}
+  .modal-close{position:absolute; top:16px; right:16px; background:none; border:none; color:var(--stone); font-size:20px;}
+  .modal h3{font-size:22px; margin-bottom:6px;}
+  .modal .sub{color:var(--stone); font-size:13px; margin-bottom:24px;}
+  .admin-err{color:#F0D27A; font-size:13px; margin-top:12px; display:none;}
+  .admin-err.show{display:block;}
+
+  /* admin dashboard */
+  .admin-tabs{display:flex; gap:8px; margin-bottom:26px; border-bottom:1px solid rgba(242,242,238,0.15); flex-wrap:wrap;}
+  .admin-tab{background:none; border:none; color:var(--stone); padding:10px 4px; margin-right:18px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:0.06em; border-bottom:2px solid transparent;}
+  .admin-tab.active{color:var(--line); border-color:var(--brass-bright);}
+  .admin-panel{display:none;}
+  .admin-panel.active{display:block;}
+  .cat-block{border:1px solid rgba(242,242,238,0.15); border-radius:4px; padding:18px; margin-bottom:16px;}
+  .cat-head{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px; flex-wrap:wrap;}
+  .cat-head input{background:transparent; border:none; border-bottom:1px solid var(--line-dim); color:var(--line); font-family:'Fraunces',serif; font-size:18px; padding:4px 0; max-width:260px;}
+  .cat-head input:focus{outline:none; border-color:var(--brass-bright);}
+  .small-btn{background:none; border:1px solid var(--line-dim); color:var(--stone); font-size:11px; padding:7px 12px; border-radius:14px; font-family:'IBM Plex Mono',monospace; text-transform:uppercase;}
+  .small-btn:hover{border-color:var(--brass-bright); color:var(--line);}
+  .small-btn.danger:hover{border-color:var(--danger); color:#F0D27A;}
+  .thumb-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:10px; margin-top:12px;}
+  .thumb{position:relative; aspect-ratio:1; border-radius:3px; overflow:hidden; border:1px solid rgba(242,242,238,0.15);}
+  .thumb img{width:100%;height:100%;object-fit:cover;}
+  .thumb button{position:absolute; top:4px; right:4px; background:rgba(0,0,0,0.85); color:#F0D27A; border:none; width:20px; height:20px; border-radius:50%; font-size:12px; line-height:1;}
+  .upload-drop{border:1px dashed var(--line-dim); border-radius:4px; padding:16px; text-align:center; color:var(--stone); font-size:12.5px; margin-top:12px; cursor:pointer;}
+  .upload-drop:hover{border-color:var(--brass-bright);}
+  .msg-item{border:1px solid rgba(242,242,238,0.15); border-radius:4px; padding:14px 16px; margin-bottom:12px;}
+  .msg-item .top{display:flex; justify-content:space-between; gap:10px; margin-bottom:6px; flex-wrap:wrap;}
+  .msg-item .top b{font-family:'Fraunces',serif; font-weight:500;}
+  .msg-item .top span{color:var(--stone); font-size:11.5px;}
+  .msg-item p{color:var(--line); font-size:14px; margin:0;}
+  .msg-item .contact-line{color:var(--brass-bright); font-size:12.5px; margin-bottom:6px;}
+  .security-note{background:rgba(232,185,35,0.08); border:1px solid rgba(232,185,35,0.35); border-radius:4px; padding:14px 16px; font-size:12.5px; color:var(--stone); margin-bottom:22px;}
+  .field-row{display:flex; gap:12px; flex-wrap:wrap;}
+  .field-row .field{flex:1; min-width:160px;}
+
+  @media (max-width:900px){
+    nav{display:none;}
+    .nav-toggle{display:block;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .about-wrap, .contact-wrap{grid-template-columns:1fr; gap:40px;}
+    .hero-stats{grid-template-columns:repeat(3,1fr);}
+  }
+  @media (max-width:560px){
+    .services-grid{grid-template-columns:1fr;}
+    .gallery-grid{grid-template-columns:1fr;}
+    .section{padding:64px 5vw;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important;}
+  }
+
+  /* ---------- modernization pass ---------- */
+  header{transition:background .35s ease, box-shadow .35s ease, border-color .35s ease;}
+  header.scrolled{background:rgba(0,0,0,0.97); box-shadow:0 8px 30px -12px rgba(0,0,0,0.55); border-color:rgba(242,242,238,0.22);}
+
+  .hero{position:relative;}
+  .hero::before{
+    content:"";
+    position:absolute; inset:-20% -10% auto -10%; height:620px;
+    background:radial-gradient(ellipse at 30% 0%, rgba(232,185,35,0.16), transparent 60%),
+               radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.05), transparent 55%);
+    pointer-events:none; z-index:0;
+  }
+  .hero .section-inner{z-index:1;}
+
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.16,.8,.3,1), transform .7s cubic-bezier(.16,.8,.3,1);}
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+  .reveal-stagger > *{opacity:0; transform:translateY(18px); transition:opacity .6s cubic-bezier(.16,.8,.3,1), transform .6s cubic-bezier(.16,.8,.3,1);}
+  .reveal-stagger.in-view > *{opacity:1; transform:translateY(0);}
+  .reveal-stagger.in-view > *:nth-child(1){transition-delay:.03s;}
+  .reveal-stagger.in-view > *:nth-child(2){transition-delay:.11s;}
+  .reveal-stagger.in-view > *:nth-child(3){transition-delay:.19s;}
+  .reveal-stagger.in-view > *:nth-child(4){transition-delay:.27s;}
+  .reveal-stagger.in-view > *:nth-child(5){transition-delay:.35s;}
+  .reveal-stagger.in-view > *:nth-child(6){transition-delay:.43s;}
+
+  .hero-tag{animation:fadeIn .8s ease both;}
+  .hero h1{animation:fadeUp .9s cubic-bezier(.16,.8,.3,1) .08s both;}
+  .hero p.lead{animation:fadeUp .9s cubic-bezier(.16,.8,.3,1) .18s both;}
+  .hero-actions{animation:fadeUp .9s cubic-bezier(.16,.8,.3,1) .28s both;}
+  .hero-frame{animation:fadeUp 1s cubic-bezier(.16,.8,.3,1) .4s both; overflow:hidden;}
+  @keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);}}
+
+  .hero-frame::after{
+    content:""; position:absolute; top:0; left:-30%; width:22%; height:100%;
+    background:linear-gradient(90deg, transparent, rgba(255,216,77,0.16), transparent);
+    animation:scanX 7s ease-in-out infinite; pointer-events:none;
+  }
+  @keyframes scanX{0%{left:-30%;} 50%{left:105%;} 100%{left:105%;}}
+
+  .btn{position:relative; overflow:hidden; transform:translateY(0); transition:background .2s, border-color .2s, transform .25s cubic-bezier(.16,.8,.3,1), box-shadow .25s;}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 24px -10px rgba(232,185,35,0.55);}
+  .btn-ghost:hover{transform:translateY(-2px);}
+
+  .service-card{transition:background .25s, transform .3s cubic-bezier(.16,.8,.3,1), box-shadow .3s, border-color .3s; border:1px solid transparent;}
+  .service-card:hover{transform:translateY(-6px); box-shadow:0 18px 34px -18px rgba(0,0,0,0.6); border-color:rgba(232,185,35,0.35);}
+  .service-card .arrow{transition:transform .3s cubic-bezier(.16,.8,.3,1), color .3s;}
+  .service-card:hover .arrow{transform:translateX(6px); color:var(--brass-bright);}
+
+  .gallery-item img{filter:saturate(0.88); transition:transform .5s cubic-bezier(.16,.8,.3,1), filter .5s;}
+  .gallery-item:hover img{transform:scale(1.07); filter:saturate(1.05);}
+  .gallery-item::after{
+    content:""; position:absolute; inset:0; background:linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.55) 100%);
+    opacity:0; transition:opacity .35s;
+  }
+  .gallery-item:hover::after{opacity:1;}
+  .gallery-item .tag{transition:transform .3s cubic-bezier(.16,.8,.3,1); z-index:1;}
+  .gallery-item:hover .tag{transform:translateY(-2px);}
+
+  .filter-btn{transition:border-color .2s, color .2s, background .2s, transform .2s;}
+  .filter-btn:hover{transform:translateY(-1px);}
+
+  .about-list li{transition:transform .25s;}
+  .about-list li:hover{transform:translateX(4px);}
+
+  .field input, .field textarea{transition:border-color .2s, background .2s, box-shadow .2s;}
+  .field input:focus, .field textarea:focus{box-shadow:0 0 0 3px rgba(232,185,35,0.18);}
+
+  .founder-line{margin-top:22px; padding-top:18px; border-top:1px solid rgba(242,242,238,0.14); color:var(--stone); font-size:13.5px; display:flex; align-items:center; gap:10px;}
+  .founder-line .dot{width:6px;height:6px;background:var(--brass-bright); border-radius:50%; flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">WINNERS <b>MİMARLIK</b></div>
+  <nav>
+    <a href="#hizmetler">Hizmetler</a>
+    <a href="#projeler">Projeler</a>
+    <a href="#hakkimizda">Hakkımızda</a>
+    <a href="#iletisim">İletişim</a>
+  </nav>
+  <a href="#iletisim" class="btn btn-primary" style="padding:11px 20px;">Teklif Al</a>
+</header>
+
+<section class="hero grid-bg-wrap" style="position:relative;">
+  <div class="grid-bg"></div>
+  <div class="section-inner" style="padding:0 6vw;">
+    <div class="hero-tag mono">Winners Mimarlık — İzmir</div>
+    <h1>Mekanınızı <em>yeniden</em> çizin, biz inşa edelim.</h1>
+    <p class="lead">İç mimarlık, tadilat, dekorasyon ve mobilya çözümlerini tek çatı altında topluyoruz. Fikirden anahtar teslime, her ölçekten projeyi uçtan uca yönetiyoruz.</p>
+    <div class="hero-actions">
+      <a href="#iletisim" class="btn btn-primary">Ücretsiz Keşif Talep Et</a>
+      <a href="#projeler" class="btn btn-ghost">Projeleri İncele</a>
+    </div>
+    <div class="hero-frame">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="hero-stats">
+        <div><div class="num">4</div><div class="lbl mono">Hizmet Alanı</div></div>
+        <div><div class="num">A-01</div><div class="lbl mono">İlk Keşif, Ücretsiz</div></div>
+        <div><div class="num">360°</div><div class="lbl mono">Anahtar Teslim Süreç</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="hizmetler">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow mono">Hizmetlerimiz</div>
+        <h2>Tasarımdan uygulamaya dört ana başlık</h2>
+      </div>
+      <p>Her proje kendi ölçeğinde ele alınır; tek bir odanın dekorasyonundan komple tadilata kadar aynı özenle çalışırız.</p>
+    </div>
+    <div class="services-grid reveal-stagger" id="servicesGrid"></div>
+  </div>
+</section>
+
+<section class="section" id="projeler" style="border-top:1px solid rgba(242,242,238,0.15);">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow mono">Projeler</div>
+        <h2>Tamamlanan işlerden bir seçki</h2>
+      </div>
+      <p>Kategoriye göre filtreleyin. Yeni projeler düzenli olarak eklenir.</p>
+    </div>
+    <div class="filters reveal" id="galleryFilters"></div>
+    <div class="gallery-grid reveal-stagger" id="galleryGrid"></div>
+  </div>
+</section>
+
+<section class="section" id="hakkimizda" style="border-top:1px solid rgba(242,242,238,0.15);">
+  <div class="section-inner about-wrap">
+    <div class="reveal">
+      <div class="eyebrow mono">Hakkımızda</div>
+      <p class="about-quote">"İyi tasarım, <span>göze değil ihtiyaca</span> göre çizilir."</p>
+      <div class="founder-line"><span class="dot"></span>Kurucu — Ömer Akgül</div>
+    </div>
+    <div class="about-body reveal">
+      <p>Winners Mimarlık olarak konut ve iş yerlerinde iç mimarlık, tadilat, dekorasyon ve mobilya üretimi alanlarında hizmet veriyoruz. Her projeye keşifle başlar, ölçüm ve ihtiyaç analiziyle devam eder, uygulamayı yerinde takip ederek teslim ederiz.</p>
+      <ul class="about-list">
+        <li><span class="dot"></span>Yerinde keşif ve ölçümlendirme</li>
+        <li><span class="dot"></span>3 boyutlu tasarım ve malzeme seçimi</li>
+        <li><span class="dot"></span>Uygulama, tadilat ve montaj takibi</li>
+        <li><span class="dot"></span>Anahtar teslim proje yönetimi</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="iletisim" style="border-top:1px solid rgba(242,242,238,0.15);">
+  <div class="section-inner contact-wrap">
+    <div class="reveal">
+      <div class="eyebrow mono">İletişim</div>
+      <h2 style="margin-bottom:26px;">Projenizi konuşalım</h2>
+      <div class="contact-info">
+        <div>
+          <span class="mono">Telefon</span>
+          <a id="infoPhone" href="#"></a>
+        </div>
+        <div>
+          <span class="mono">E-posta</span>
+          <a id="infoEmail" href="#"></a>
+        </div>
+        <div>
+          <span class="mono">Adres</span>
+          <span id="infoAddress"></span>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <form id="contactForm">
+        <div class="field-row">
+          <div class="field"><label for="cfName">Ad Soyad</label><input id="cfName" required maxlength="80" autocomplete="name"></div>
+          <div class="field"><label for="cfPhone">Telefon</label><input id="cfPhone" required maxlength="30" autocomplete="tel"></div>
+        </div>
+        <div class="field"><label for="cfAddress">Adres</label><input id="cfAddress" required maxlength="200" autocomplete="street-address"></div>
+        <div class="field"><label for="cfEmail">E-posta (opsiyonel)</label><input id="cfEmail" type="email" maxlength="120" autocomplete="email"></div>
+        <div class="field"><label for="cfMsg">Mesajınız</label><textarea id="cfMsg" required maxlength="1000"></textarea></div>
+        <button class="btn btn-primary" type="submit">Teklif Al</button>
+        <div class="form-msg" id="cfMsgResult"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fmark mono" id="footerMark">© <span id="year"></span> Winners Mimarlık</div>
+  <div class="flinks">
+    <a href="#hizmetler">Hizmetler</a>
+    <a href="#projeler">Projeler</a>
+    <a href="#iletisim">İletişim</a>
+  </div>
+</footer>
+
+<!-- ================= ADMIN LOGIN OVERLAY ================= -->
+<div class="overlay" id="loginOverlay">
+  <div class="modal">
+    <button class="modal-close" id="closeLogin" aria-label="Kapat">×</button>
+    <div class="mono" style="color:var(--brass-bright); margin-bottom:8px;">Yetkili Girişi</div>
+    <h3>Panel Girişi</h3>
+    <div class="sub">Bu alan yalnızca site yöneticisi içindir.</div>
+    <form id="loginForm">
+      <div class="field"><label for="loUser">Kullanıcı adı</label><input id="loUser" autocomplete="username" required></div>
+      <div class="field"><label for="loPass">Şifre</label><input id="loPass" type="password" autocomplete="current-password" required></div>
+      <button class="btn btn-primary" type="submit" style="width:100%; justify-content:center;">Giriş Yap</button>
+      <div class="admin-err" id="loginErr">Kullanıcı adı veya şifre hatalı.</div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= ADMIN DASHBOARD OVERLAY ================= -->
+<div class="overlay" id="adminOverlay">
+  <div class="modal wide">
+    <button class="modal-close" id="closeAdmin" aria-label="Kapat">×</button>
+    <h3>Yönetim Paneli</h3>
+    <div class="sub">Kategoriler, görseller, iletişim mesajları ve site bilgileri.</div>
+
+    <div class="security-note">
+      Bu panel tarayıcı üzerinden çalışır; kritik/hassas veriler için gerçek bir sunucu tabanlı sisteme geçmenizi öneririz. Şifrenizi kimseyle paylaşmayın ve düzenli değiştirin.
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="cats">Kategoriler &amp; Görseller</button>
+      <button class="admin-tab" data-tab="msgs">Gelen Mesajlar</button>
+      <button class="admin-tab" data-tab="site">Site Bilgileri</button>
+      <button class="admin-tab" data-tab="pass">Şifre Değiştir</button>
+      <button class="small-btn" id="logoutBtn" style="margin-left:auto;">Çıkış Yap</button>
+    </div>
+
+    <div class="admin-panel active" id="tab-cats">
+      <div id="catEditor"></div>
+      <button class="small-btn" id="addCatBtn" style="margin-top:6px;">+ Yeni kategori</button>
+    </div>
+
+    <div class="admin-panel" id="tab-msgs">
+      <div id="msgList"></div>
+    </div>
+
+    <div class="admin-panel" id="tab-site">
+      <div class="field"><label for="siPhone">Telefon</label><input id="siPhone"></div>
+      <div class="field"><label for="siEmail">E-posta</label><input id="siEmail"></div>
+      <div class="field"><label for="siAddress">Adres</label><input id="siAddress"></div>
+      <button class="btn btn-primary" id="saveSiteBtn">Kaydet</button>
+      <div class="admin-err" id="siteSaved" style="color:var(--brass-bright);">Kaydedildi.</div>
+    </div>
+
+    <div class="admin-panel" id="tab-pass">
+      <div class="field"><label for="npOld">Mevcut şifre</label><input id="npOld" type="password"></div>
+      <div class="field"><label for="npNew">Yeni şifre (en az 8 karakter)</label><input id="npNew" type="password"></div>
+      <button class="btn btn-primary" id="changePassBtn">Şifreyi Güncelle</button>
+      <div class="admin-err" id="passErr"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= LIGHTBOX ================= -->
+<div class="overlay" id="lightbox">
+  <div style="max-width:90vw; max-height:86vh; position:relative;">
+    <button class="modal-close" id="closeLightbox" style="position:fixed; top:24px; right:28px;">×</button>
+    <img id="lightboxImg" style="max-width:90vw; max-height:86vh; border-radius:4px;">
+  </div>
+</div>
+
+<script>
+(function(){
+
+// ---------- helpers ----------
+function esc(s){ return String(s == null ? '' : s); } // used only with textContent, kept for clarity
+function el(tag, cls, text){
+  const e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(text != null) e.textContent = text;
+  return e;
+}
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+
+async function apiGet(url){
+  const r = await fetch(url, {credentials:'same-origin'});
+  return await r.json();
+}
+async function apiPost(url, body){
+  const r = await fetch(url, {
+    method:'POST',
+    credentials:'same-origin',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(body)
+  });
+  return await r.json();
+}
+
+const DEFAULT_CATEGORIES = [
+  {id:'ic-mimarlik', code:'A-01', name:'İç Mimarlık', desc:'Mekan planlama, 3B tasarım ve malzeme seçimi.'},
+  {id:'tadilat', code:'A-02', name:'Tadilat', desc:'Komple veya kısmi yenileme, tesisat ve yapısal işler.'},
+  {id:'dekorasyon', code:'A-03', name:'Dekorasyon', desc:'Aydınlatma, tekstil ve aksesuar ile kimlik kazandırma.'},
+  {id:'mobilya', code:'A-04', name:'Mobilya', desc:'Ölçüye özel üretim ve uygulamalı mobilya çözümleri.'}
+];
+const DEFAULT_SITE_INFO = {
+  phone:'+90 232 000 00 00',
+  email:'info@winnersmimarlik.com',
+  address:'Uluönder Caddesi No:6/A, Karabağlar, İzmir'
+};
+
+let state = {
+  categories: null,
+  gallery: {},     // catId -> [{id, dataUrl, caption}]
+  messages: [],
+  siteInfo: null,
+  session: false
+};
+
+// ---------- load ----------
+async function loadAll(){
+  try{
+    const content = await apiGet('api/content.php');
+    state.categories = (content && content.categories) || DEFAULT_CATEGORIES;
+    state.siteInfo = (content && content.site) || DEFAULT_SITE_INFO;
+    state.gallery = (content && content.gallery) || {};
+  }catch(e){
+    state.categories = DEFAULT_CATEGORIES;
+    state.siteInfo = DEFAULT_SITE_INFO;
+    state.gallery = {};
+  }
+  state.categories.forEach(c=>{ if(!state.gallery[c.id]) state.gallery[c.id] = []; });
+  try{
+    const sess = await apiGet('api/session.php');
+    state.session = !!(sess && sess.loggedIn);
+  }catch(e){ state.session = false; }
+  renderAll();
+}
+
+function renderAll(){
+  renderServices();
+  renderFilters();
+  renderGallery('all');
+  renderSiteInfo();
+}
+
+// ---------- public site rendering ----------
+function renderServices(){
+  const grid = document.getElementById('servicesGrid');
+  grid.innerHTML = '';
+  state.categories.forEach(c=>{
+    const card = el('div','service-card');
+    const code = el('div','code mono', c.code);
+    const h = el('h3', null, c.name);
+    const p = el('p', null, c.desc || '');
+    const arrow = el('div','arrow','→');
+    card.append(code,h,p,arrow);
+    card.addEventListener('click', ()=>{
+      document.getElementById('projeler').scrollIntoView({behavior:'smooth'});
+      setTimeout(()=>renderGallery(c.id), 300);
+    });
+    grid.appendChild(card);
+  });
+}
+
+let activeFilter = 'all';
+function renderFilters(){
+  const wrap = document.getElementById('galleryFilters');
+  wrap.innerHTML = '';
+  const allBtn = el('button','filter-btn active','Tümü');
+  allBtn.dataset.id = 'all';
+  wrap.appendChild(allBtn);
+  state.categories.forEach(c=>{
+    const b = el('button','filter-btn', c.name);
+    b.dataset.id = c.id;
+    wrap.appendChild(b);
+  });
+  wrap.querySelectorAll('.filter-btn').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      wrap.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      renderGallery(b.dataset.id);
+    });
+  });
+}
+
+function renderGallery(filterId){
+  activeFilter = filterId;
+  const grid = document.getElementById('galleryGrid');
+  grid.innerHTML = '';
+  let items = [];
+  state.categories.forEach(c=>{
+    if(filterId !== 'all' && c.id !== filterId) return;
+    (state.gallery[c.id] || []).forEach(img=>{
+      items.push({...img, catName:c.name});
+    });
+  });
+  if(items.length === 0){
+    const empty = el('div','empty-state');
+    empty.appendChild(el('b',null,'Henüz proje görseli eklenmedi'));
+    empty.appendChild(el('span',null,'Bu kategoriye ait projeler yakında burada listelenecek.'));
+    grid.appendChild(empty);
+    return;
+  }
+  items.forEach(img=>{
+    const item = el('div','gallery-item');
+    const im = document.createElement('img');
+    im.src = img.dataUrl;
+    im.alt = img.caption || img.catName;
+    const tag = el('span','tag mono', img.catName);
+    item.append(im, tag);
+    item.addEventListener('click', ()=>{
+      document.getElementById('lightboxImg').src = img.dataUrl;
+      document.getElementById('lightbox').classList.add('open');
+    });
+    grid.appendChild(item);
+  });
+}
+
+function renderSiteInfo(){
+  const p = document.getElementById('infoPhone');
+  p.textContent = state.siteInfo.phone;
+  p.href = 'tel:' + state.siteInfo.phone.replace(/\s+/g,'');
+  const e = document.getElementById('infoEmail');
+  e.textContent = state.siteInfo.email;
+  e.href = 'mailto:' + state.siteInfo.email;
+  document.getElementById('infoAddress').textContent = state.siteInfo.address;
+}
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// ---------- lightbox ----------
+document.getElementById('closeLightbox').addEventListener('click', ()=>{
+  document.getElementById('lightbox').classList.remove('open');
+});
+document.getElementById('lightbox').addEventListener('click', (e)=>{
+  if(e.target.id === 'lightbox') document.getElementById('lightbox').classList.remove('open');
+});
+
+// ---------- contact form ----------
+document.getElementById('contactForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const name = document.getElementById('cfName').value.trim();
+  const phone = document.getElementById('cfPhone').value.trim();
+  const address = document.getElementById('cfAddress').value.trim();
+  const email = document.getElementById('cfEmail').value.trim();
+  const msg = document.getElementById('cfMsg').value.trim();
+  const resultBox = document.getElementById('cfMsgResult');
+  if(!name || !phone || !address || !msg){
+    resultBox.className = 'form-msg err';
+    resultBox.textContent = 'Lütfen ad soyad, adres, telefon ve mesaj alanlarını doldurun.';
+    return;
+  }
+  const entry = {name:name.slice(0,80), phone:phone.slice(0,30), address:address.slice(0,200), email:email.slice(0,120), message:msg.slice(0,1000)};
+  let ok = false, errText = 'Bir sorun oluştu, lütfen tekrar deneyin.';
+  try{
+    const res = await apiPost('api/messages.php', Object.assign({action:'add'}, entry));
+    ok = !!(res && res.success);
+    if(!ok && res && res.error) errText = res.error;
+  }catch(err){ ok = false; }
+  resultBox.className = ok ? 'form-msg ok' : 'form-msg err';
+  resultBox.textContent = ok ? 'Mesajınız alındı, en kısa sürede sizinle iletişime geçeceğiz.' : errText;
+  if(ok) e.target.reset();
+});
+
+// ============================================================
+// ADMIN — gizli erişim, giriş, panel
+// ============================================================
+
+// gizli tetikleyici: footer yazısına 5 kez tıklama (4 sn içinde)
+let clickCount = 0, clickTimer = null;
+document.getElementById('footerMark').addEventListener('click', ()=>{
+  clickCount++;
+  clearTimeout(clickTimer);
+  clickTimer = setTimeout(()=>{ clickCount = 0; }, 4000);
+  if(clickCount >= 5){
+    clickCount = 0;
+    openLogin();
+  }
+});
+// klavye kısayolu: Ctrl+Alt+A
+document.addEventListener('keydown', (e)=>{
+  if(e.ctrlKey && e.altKey && e.key.toLowerCase() === 'a'){
+    openLogin();
+  }
+});
+
+function openLogin(){
+  document.getElementById('loginErr').classList.remove('show');
+  document.getElementById('loginForm').reset();
+  document.getElementById('loginOverlay').classList.add('open');
+  document.getElementById('loUser').focus();
+}
+document.getElementById('closeLogin').addEventListener('click', ()=>{
+  document.getElementById('loginOverlay').classList.remove('open');
+});
+
+document.getElementById('loginForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const errBox = document.getElementById('loginErr');
+  errBox.classList.remove('show');
+  const user = document.getElementById('loUser').value.trim();
+  const pass = document.getElementById('loPass').value;
+  try{
+    const res = await apiPost('api/login.php', {username:user, password:pass});
+    if(res && res.success){
+      state.session = true;
+      document.getElementById('loginOverlay').classList.remove('open');
+      openAdmin();
+    } else {
+      errBox.textContent = (res && res.error) || 'Kullanıcı adı veya şifre hatalı.';
+      errBox.classList.add('show');
+    }
+  }catch(err){
+    errBox.textContent = 'Sunucuya bağlanılamadı.';
+    errBox.classList.add('show');
+  }
+});
+
+document.getElementById('closeAdmin').addEventListener('click', ()=>{
+  document.getElementById('adminOverlay').classList.remove('open');
+});
+document.getElementById('logoutBtn').addEventListener('click', async ()=>{
+  try{ await apiPost('api/logout.php', {}); }catch(e){}
+  state.session = false;
+  document.getElementById('adminOverlay').classList.remove('open');
+});
+
+// tabs
+document.querySelectorAll('.admin-tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+  });
+});
+
+function openAdmin(){
+  document.getElementById('adminOverlay').classList.add('open');
+  renderCatEditor();
+  loadMessages();
+  document.getElementById('siPhone').value = state.siteInfo.phone;
+  document.getElementById('siEmail').value = state.siteInfo.email;
+  document.getElementById('siAddress').value = state.siteInfo.address;
+}
+async function loadMessages(){
+  try{
+    const msgs = await apiGet('api/messages.php');
+    state.messages = Array.isArray(msgs) ? msgs : [];
+  }catch(e){ state.messages = []; }
+  renderMsgList();
+}
+
+// ---- image compression before storing ----
+function compressImage(file){
+  return new Promise((resolve, reject)=>{
+    if(!file.type.startsWith('image/')){ reject(new Error('not-image')); return; }
+    if(file.size > 10 * 1024 * 1024){ reject(new Error('too-large')); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const maxW = 1400;
+        const scale = Math.min(1, maxW / img.width);
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', 0.74));
+      };
+      img.onerror = () => reject(new Error('bad-image'));
+      img.src = reader.result;
+    };
+    reader.onerror = () => reject(new Error('read-error'));
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderCatEditor(){
+  const wrap = document.getElementById('catEditor');
+  wrap.innerHTML = '';
+  state.categories.forEach(cat=>{
+    const block = el('div','cat-block');
+    const head = el('div','cat-head');
+    const nameInput = document.createElement('input');
+    nameInput.value = cat.name;
+    nameInput.addEventListener('change', async ()=>{
+      cat.name = nameInput.value.trim().slice(0,60) || cat.name;
+      await apiPost('api/content.php', {action:'set_categories', value: state.categories});
+      renderAll();
+    });
+    const codeSpan = el('span','mono', cat.code);
+    codeSpan.style.color = 'var(--brass-bright)';
+    const delBtn = el('button','small-btn danger','Kategoriyi sil');
+    delBtn.addEventListener('click', async ()=>{
+      if(!confirm('"'+cat.name+'" kategorisini ve içindeki tüm görselleri silmek istediğinize emin misiniz?')) return;
+      state.categories = state.categories.filter(c=>c.id !== cat.id);
+      delete state.gallery[cat.id];
+      await apiPost('api/content.php', {action:'set_categories', value: state.categories});
+      await apiPost('api/content.php', {action:'delete_gallery', catId: cat.id});
+      renderCatEditor();
+      renderAll();
+    });
+    head.append(codeSpan, nameInput, delBtn);
+    block.appendChild(head);
+
+    const thumbGrid = el('div','thumb-grid');
+    (state.gallery[cat.id]||[]).forEach(img=>{
+      const t = el('div','thumb');
+      const im = document.createElement('img'); im.src = img.dataUrl;
+      const rm = el('button', null, '×');
+      rm.addEventListener('click', async ()=>{
+        state.gallery[cat.id] = state.gallery[cat.id].filter(i=>i.id !== img.id);
+        await apiPost('api/content.php', {action:'set_gallery', catId: cat.id, value: state.gallery[cat.id]});
+        renderCatEditor(); renderGallery(activeFilter);
+      });
+      t.append(im, rm);
+      thumbGrid.appendChild(t);
+    });
+    block.appendChild(thumbGrid);
+
+    const dropZone = el('div','upload-drop','+ Görsel yükle (JPG / PNG, otomatik sıkıştırılır)');
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file'; fileInput.accept = 'image/*'; fileInput.multiple = true; fileInput.style.display = 'none';
+    dropZone.addEventListener('click', ()=>fileInput.click());
+    fileInput.addEventListener('change', async ()=>{
+      for(const file of fileInput.files){
+        try{
+          const dataUrl = await compressImage(file);
+          state.gallery[cat.id] = state.gallery[cat.id] || [];
+          state.gallery[cat.id].push({id:uid(), dataUrl, caption:''});
+        }catch(err){
+          alert('Görsel yüklenemedi: ' + file.name);
+        }
+      }
+      await apiPost('api/content.php', {action:'set_gallery', catId: cat.id, value: state.gallery[cat.id]});
+      renderCatEditor(); renderGallery(activeFilter);
+      fileInput.value = '';
+    });
+    block.append(dropZone, fileInput);
+    wrap.appendChild(block);
+  });
+}
+
+document.getElementById('addCatBtn').addEventListener('click', async ()=>{
+  const name = prompt('Yeni kategori adı:');
+  if(!name || !name.trim()) return;
+  const nextIndex = state.categories.length + 1;
+  const newCat = {id:'cat-'+uid(), code:'A-'+String(nextIndex).padStart(2,'0'), name:name.trim().slice(0,60), desc:''};
+  state.categories.push(newCat);
+  state.gallery[newCat.id] = [];
+  await apiPost('api/content.php', {action:'set_categories', value: state.categories});
+  await apiPost('api/content.php', {action:'set_gallery', catId: newCat.id, value: []});
+  renderCatEditor();
+  renderAll();
+});
+
+function renderMsgList(){
+  const wrap = document.getElementById('msgList');
+  wrap.innerHTML = '';
+  if(state.messages.length === 0){
+    wrap.appendChild(el('div','sub','Henüz iletişim formundan mesaj gelmedi.'));
+    return;
+  }
+  state.messages.forEach(m=>{
+    const item = el('div','msg-item');
+    const top = el('div','top');
+    top.append(el('b',null,m.name), el('span',null,new Date(m.date).toLocaleString('tr-TR')));
+    item.appendChild(top);
+    item.appendChild(el('div','contact-line', m.phone + (m.email ? ' · ' + m.email : '')));
+    if(m.address) item.appendChild(el('div','contact-line', m.address));
+    item.appendChild(el('p',null,m.message));
+    const del = el('button','small-btn danger','Sil');
+    del.style.marginTop = '10px';
+    del.addEventListener('click', async ()=>{
+      await apiPost('api/messages.php', {action:'delete', id: m.id});
+      state.messages = state.messages.filter(x=>x.id !== m.id);
+      renderMsgList();
+    });
+    item.appendChild(del);
+    wrap.appendChild(item);
+  });
+}
+
+document.getElementById('saveSiteBtn').addEventListener('click', async ()=>{
+  state.siteInfo = {
+    phone: document.getElementById('siPhone').value.trim().slice(0,40) || state.siteInfo.phone,
+    email: document.getElementById('siEmail').value.trim().slice(0,120) || state.siteInfo.email,
+    address: document.getElementById('siAddress').value.trim().slice(0,160) || state.siteInfo.address
+  };
+  await apiPost('api/content.php', {action:'set_site', value: state.siteInfo});
+  renderSiteInfo();
+  const saved = document.getElementById('siteSaved');
+  saved.classList.add('show');
+  setTimeout(()=>saved.classList.remove('show'), 2000);
+});
+
+document.getElementById('changePassBtn').addEventListener('click', async ()=>{
+  const oldPass = document.getElementById('npOld').value;
+  const newPass = document.getElementById('npNew').value;
+  const errBox = document.getElementById('passErr');
+  errBox.classList.remove('show');
+  errBox.style.color = '';
+  if(newPass.length < 8){
+    errBox.textContent = 'Yeni şifre en az 8 karakter olmalı.';
+    errBox.classList.add('show');
+    return;
+  }
+  try{
+    const res = await apiPost('api/change_password.php', {current: oldPass, new: newPass});
+    if(res && res.success){
+      errBox.style.color = 'var(--brass-bright)';
+      errBox.textContent = 'Şifre güncellendi.';
+      errBox.classList.add('show');
+      document.getElementById('npOld').value = '';
+      document.getElementById('npNew').value = '';
+    } else {
+      errBox.textContent = (res && res.error) || 'Şifre güncellenemedi.';
+      errBox.classList.add('show');
+    }
+  }catch(e){
+    errBox.textContent = 'Sunucuya bağlanılamadı.';
+    errBox.classList.add('show');
+  }
+});
+
+// ---------- header scroll shadow ----------
+const headerEl = document.querySelector('header');
+window.addEventListener('scroll', ()=>{
+  headerEl.classList.toggle('scrolled', window.scrollY > 12);
+}, {passive:true});
+
+// ---------- scroll reveal ----------
+function initReveal(){
+  const targets = document.querySelectorAll('.reveal, .reveal-stagger');
+  if(!('IntersectionObserver' in window)){
+    targets.forEach(t=>t.classList.add('in-view'));
+    return;
+  }
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+  targets.forEach(t=>io.observe(t));
+}
+
+loadAll().then(initReveal);
+})();
+</script>
+</body>
+</html>
