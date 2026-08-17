@@ -44,6 +44,7 @@
     <a href="#hizmetler">Hizmetler</a>
     <a href="#projeler">Projeler</a>
     <a href="#hakkimizda">Hakkımızda</a>
+    <a href="#sss">SSS</a>
     <a href="#iletisim">İletişim</a>
   </nav>
   <div style="display:flex; align-items:center; gap:14px;">
@@ -118,6 +119,39 @@
         <li><span class="dot"></span>Uygulama, tadilat ve montaj takibi</li>
         <li><span class="dot"></span>Anahtar teslim proje yönetimi</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sss" style="border-top:1px solid rgba(242,242,238,0.15);">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow mono">Sık Sorulan Sorular</div>
+        <h2>Merak edilenler</h2>
+      </div>
+    </div>
+    <div class="faq-list reveal-stagger" id="faqList">
+      <details class="faq-item">
+        <summary>İzmir'in her ilçesinde hizmet veriyor musunuz?</summary>
+        <p>Evet, Karabağlar'daki ofisimizden İzmir genelinde (Bornova, Konak, Buca, Balçova, Çiğli ve diğer ilçeler dahil) iç mimarlık, tadilat ve mobilya projeleri yürütüyoruz.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Ücretsiz keşif yapıyor musunuz?</summary>
+        <p>Evet, her proje öncesinde yerinde ücretsiz keşif yapıyor, ölçüm ve ihtiyaç analizini bu ziyarette tamamlıyoruz.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Bir tadilat projesi ortalama ne kadar sürer?</summary>
+        <p>Süre, projenin kapsamına göre değişir; tek bir banyo yenilemesi birkaç haftada tamamlanabilirken komple daire tadilatı birkaç ay sürebilir. Kesin süre, keşif sonrası netleşen kapsama göre size bildirilir.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Sadece tasarım mı yapıyorsunuz, uygulamayı da siz mi yönetiyorsunuz?</summary>
+        <p>Tasarımdan uygulamaya kadar tüm süreci tek elden yönetiyoruz. Malzeme seçimi, tesisat, mobilya üretimi ve montaj dahil anahtar teslim hizmet veriyoruz.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Ölçüye özel mobilya için ayrı bir iç mimarlık projesi şart mı?</summary>
+        <p>Hayır, sadece mobilya ihtiyacınız için de bizimle çalışabilirsiniz. Ancak mekanın genel tasarımıyla uyumlu olması için birlikte planlamayı öneririz.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -245,10 +279,10 @@ function el(tag, cls, text){
 
 // Hizmet kategorileri (yeni kategori eklemek/silmek için bu diziyi düzenleyin)
 const CATEGORIES = [
-  {id:'ic-mimarlik', name:'İç Mimarlık', desc:'Mekan planlama, 3B tasarım ve malzeme seçimi.'},
-  {id:'tadilat', name:'Tadilat', desc:'Komple veya kısmi yenileme, tesisat ve yapısal işler.'},
+  {id:'ic-mimarlik', name:'İç Mimarlık', desc:'Mekan planlama, 3B tasarım ve malzeme seçimi.', page:'izmir-ic-mimarlik.html'},
+  {id:'tadilat', name:'Tadilat', desc:'Komple veya kısmi yenileme, tesisat ve yapısal işler.', page:'izmir-tadilat.html'},
   {id:'dekorasyon', name:'Dekorasyon', desc:'Aydınlatma, tekstil ve aksesuar ile kimlik kazandırma.'},
-  {id:'mobilya', name:'Mobilya', desc:'Ölçüye özel üretim ve uygulamalı mobilya çözümleri.'}
+  {id:'mobilya', name:'Mobilya', desc:'Ölçüye özel üretim ve uygulamalı mobilya çözümleri.', page:'izmir-mobilya.html'}
 ];
 
 // İletişim bilgileri
@@ -310,8 +344,16 @@ function renderServices(){
     const code = el('div','code mono', String(i+1).padStart(2,'0'));
     const h = el('h3', null, c.name);
     const p = el('p', null, c.desc || '');
-    const arrow = el('div','arrow','→');
-    card.append(code,h,p,arrow);
+    card.append(code,h,p);
+    if(c.page){
+      const link = el('a','service-detail-link', 'Detaylı bilgi →');
+      link.href = c.page;
+      link.addEventListener('click', (e)=> e.stopPropagation());
+      card.appendChild(link);
+    } else {
+      const arrow = el('div','arrow','→');
+      card.appendChild(arrow);
+    }
     card.addEventListener('click', ()=>{
       document.getElementById('projeler').scrollIntoView({behavior:'smooth'});
       setTimeout(()=>renderGallery(c.id), 300);
@@ -576,10 +618,15 @@ loadAll().then(initReveal);
   "description": "İzmir'de iç mimarlık, tadilat, dekorasyon ve ölçüye özel mobilya üretimi hizmeti veren mimarlık ofisi.",
   "telephone": "+905346775171",
   "email": "winnersmimarlik@gmail.com",
-  "areaServed": {
-    "@type": "City",
-    "name": "İzmir"
-  },
+  "areaServed": [
+    {"@type": "City", "name": "İzmir"},
+    {"@type": "AdministrativeArea", "name": "Karabağlar"},
+    {"@type": "AdministrativeArea", "name": "Bornova"},
+    {"@type": "AdministrativeArea", "name": "Konak"},
+    {"@type": "AdministrativeArea", "name": "Buca"},
+    {"@type": "AdministrativeArea", "name": "Balçova"},
+    {"@type": "AdministrativeArea", "name": "Çiğli"}
+  ],
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Uluönder Caddesi No:6/A, Karabağlar",
@@ -607,6 +654,55 @@ loadAll().then(initReveal);
   ],
   "sameAs": [
     "https://instagram.com/winners.mimarlik"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "İzmir'in her ilçesinde hizmet veriyor musunuz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Evet, Karabağlar'daki ofisimizden İzmir genelinde (Bornova, Konak, Buca, Balçova, Çiğli ve diğer ilçeler dahil) iç mimarlık, tadilat ve mobilya projeleri yürütüyoruz."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ücretsiz keşif yapıyor musunuz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Evet, her proje öncesinde yerinde ücretsiz keşif yapıyor, ölçüm ve ihtiyaç analizini bu ziyarette tamamlıyoruz."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Bir tadilat projesi ortalama ne kadar sürer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Süre, projenin kapsamına göre değişir; tek bir banyo yenilemesi birkaç haftada tamamlanabilirken komple daire tadilatı birkaç ay sürebilir. Kesin süre, keşif sonrası netleşen kapsama göre bildirilir."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Sadece tasarım mı yapıyorsunuz, uygulamayı da siz mi yönetiyorsunuz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tasarımdan uygulamaya kadar tüm süreci tek elden yönetiyoruz. Malzeme seçimi, tesisat, mobilya üretimi ve montaj dahil anahtar teslim hizmet veriyoruz."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ölçüye özel mobilya için ayrı bir iç mimarlık projesi şart mı?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hayır, sadece mobilya ihtiyacınız için de çalışabilirsiniz. Ancak mekanın genel tasarımıyla uyumlu olması için birlikte planlamayı öneririz."
+      }
+    }
   ]
 }
 </script>
